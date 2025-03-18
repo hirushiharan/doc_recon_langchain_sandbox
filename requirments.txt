@@ -1,6 +1,4 @@
-langchain
-langchain-community
-openai
-google-search-results
-wikipedia
-numexpr
+pdfplumber
+pytesseract
+pymupdf
+pillow
