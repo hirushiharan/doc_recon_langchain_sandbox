@@ -15,6 +15,8 @@ Extract the following information from the given invoice text:
 - Vendor Name: (e.g., ABC Supplies)
 - Total Amount: (e.g., 250.75)
 - Invoice Date: (e.g., 2025-03-18)
+- Services: (e.g.,  Transaction fee - 250.36
+                    Basic fee - 185.36)
 
 Invoice Text:
 {invoice_text}
@@ -24,6 +26,7 @@ Output the extracted information in the format:
 - Vendor Name: <value>
 - Total Amount: <value>
 - Invoice Date: <value>
+- Services: <list data>
 """
 
 # Define the LangChain prompt template and chain
