@@ -2,3 +2,5 @@ pdfplumber
 pytesseract
 pymupdf
 pillow
+langchain
+openai
