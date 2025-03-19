@@ -7,7 +7,7 @@ textract = boto3.client("textract")
 
 # S3 Bucket and File Name
 bucket_name = "extract-document-lcm"
-file_name = "sample-invoice.pdf"
+file_name = "Order Sample 2.pdf"
 
 # Start the Textract job
 response = textract.start_document_text_detection(
@@ -32,20 +32,23 @@ def check_job_status(job_id):
 result = check_job_status(job_id)
 
 extracted_text = []
+f = open("docs/Order Sample 2.txt", "w")
 
 # Extract and print text
 if result["JobStatus"] == "SUCCEEDED":
     for block in result["Blocks"]:
         if block["BlockType"] == "LINE":
+            f.write(block["Text"])
+            f.write("\n")
             extracted_text.append(block["Text"])
 else:
     print("Textract failed!")
 
+f.close()
+
 if extracted_text is not []:
     # Process the extracted text using LangChain
     structured_data = structure_extract_data.extract_invoice_data(extracted_text)
-
-    print("Structured Data:\n", structured_data)
-
+    print(f"Structured Data: {structured_data}")
 else:
     print("No data")
