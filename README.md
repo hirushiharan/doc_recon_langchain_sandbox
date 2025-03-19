@@ -59,21 +59,20 @@ Create a .env file and add your API keys:
 Project Structure
 -----------------
     doc_recon_langchain_sandbox/
-        ├── data/
+        ├── data/                 # Sample documents
         │   ├── <sample pdfs>
-        ├── docs/
+        ├── docs/                 # Extracted and structured output files
         │   ├── <output text files>
         ├── functions/
-        │   ├── <output text files>
-        │   │   │   ├── extraction.py     # Extracts text from PDFs
-        │   │   │   ├── structure_extract_data.py # Uses LangChain for structured extraction
-        │   │   │   └── extract_aws.py
-        ├── .gitignore
-        ├── .env
-        ├── main.py
-        ├── LICENSE
-        ├── README.md
-        └── requirements.txt
+        │   ├── extraction.py     # Extracts text from PDFs
+        │   ├── structure_extract_data.py # Uses LangChain for structured extraction
+        │   ├── extract_aws.py    # AWS Textract integration
+        ├── .gitignore            # Git ignore file
+        ├── .env                  # Environment variables (excluded from Git)
+        ├── main.py               # Entry point for the application
+        ├── LICENSE               # License file
+        ├── README.md             # Project documentation
+        └── requirements.txt      # Required Python libraries
 
 Usage
 -----
