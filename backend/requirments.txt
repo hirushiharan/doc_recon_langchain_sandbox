@@ -4,3 +4,4 @@ pymupdf
 pillow
 langchain
 openai
+boto3
