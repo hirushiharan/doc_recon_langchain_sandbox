@@ -5,7 +5,15 @@ import io
 import fitz  # PyMuPDF
 
 def extract_text_from_pdf(pdf_path: str) -> str:
-    """Extract text from a PDF file using pdfplumber (for structured PDFs)."""
+    """
+    Extracts text from a PDF file using pdfplumber (for structured PDFs).
+    
+    Args:
+        pdf_path (str): Path to the PDF file.
+    
+    Returns:
+        str: Extracted text from the PDF, or None if an error occurs.
+    """
     text = ""
     try:
         with pdfplumber.open(pdf_path) as pdf:
@@ -17,7 +25,15 @@ def extract_text_from_pdf(pdf_path: str) -> str:
         return None
 
 def extract_text_from_scanned_pdf(pdf_path: str) -> str:
-    """Perform OCR on scanned PDFs using pytesseract."""
+    """
+    Performs OCR on scanned PDFs using pytesseract.
+    
+    Args:
+        pdf_path (str): Path to the scanned PDF file.
+    
+    Returns:
+        str: Extracted text from the scanned PDF, or None if an error occurs.
+    """
     text = ""
     try:
         doc = fitz.open(pdf_path)  # Open the PDF
@@ -32,9 +48,15 @@ def extract_text_from_scanned_pdf(pdf_path: str) -> str:
 
 def process_document(pdf_path: str) -> str:
     """
-    Process a PDF document:
-    - First, try extracting text using pdfplumber.
-    - If extraction fails (possible scanned PDF), fallback to OCR.
+    Processes a PDF document:
+    - Attempts text extraction using pdfplumber.
+    - If extraction fails (indicating a scanned PDF), falls back to OCR.
+    
+    Args:
+        pdf_path (str): Path to the PDF file.
+    
+    Returns:
+        str: Extracted text from the PDF.
     """
     text = extract_text_from_pdf(pdf_path)
     if not text:  # If no text found, assume it's a scanned PDF and use OCR
