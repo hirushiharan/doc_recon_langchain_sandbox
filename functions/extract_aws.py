@@ -51,14 +51,12 @@ def extract_text_from_result(result: dict, output_file: str) -> list:
         list: Extracted text lines.
     """
     extracted_text = []
-    with open(output_file, "w") as f:
-        if result["JobStatus"] == "SUCCEEDED":
-            for block in result["Blocks"]:
-                if block["BlockType"] == "LINE":
-                    f.write(block["Text"] + "\n")
-                    extracted_text.append(block["Text"])
-        else:
-            print("Textract failed!")
+    if result["JobStatus"] == "SUCCEEDED":
+        for block in result["Blocks"]:
+            if block["BlockType"] == "LINE":
+                extracted_text.append(block["Text"])
+    else:
+        print("Textract failed!")
     return extracted_text
 
 def process_extracted_data(extracted_text: list, output_file: str):

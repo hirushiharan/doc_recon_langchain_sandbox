@@ -7,47 +7,8 @@ from langchain.llms import OpenAI
 # Set up OpenAI API Key (Ensure the key is set as an environment variable)
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-# Define the prompt template for extracting invoice data
-invoice_prompt_template = PromptTemplate(
-    input_variables=["invoice_text"],
-    template="""
-    Extract the following information from the given invoice text:
-    - Invoice Number: (e.g., INV12345)
-    - Vendor Name: (e.g., ABC Supplies)
-    - Total Amount: (e.g., 250.75)
-    - Invoice Date: (e.g., 2025-03-18)
-    - Services: (e.g.,  Transaction fee - 250.36
-                        Basic fee - 185.36)
-
-    Invoice Text:
-    {invoice_text}
-
-    Output the extracted information in the format:
-    - Invoice Number: <value>
-    - Vendor Name: <value>
-    - Total Amount: <value>
-    - Invoice Date: <value>
-    - Services: <list data>
-    """
-)
-
 # Initialize the LLM model with a moderate temperature for balanced creativity and consistency
 llm = OpenAI(temperature=0.5)
-
-# Create the invoice extraction chain
-invoice_chain = LLMChain(prompt=invoice_prompt_template, llm=llm)
-
-def extract_invoice_data(invoice_text: str) -> str:
-    """
-    Extracts structured invoice data from the given invoice text using an LLM.
-    
-    Args:
-        invoice_text (str): The text content of the invoice document.
-    
-    Returns:
-        str: The extracted invoice details in a structured format.
-    """
-    return invoice_chain.run({"invoice_text": invoice_text})
 
 # Define the prompt template for extracting order sample data
 order_prompt_template = PromptTemplate(
@@ -62,27 +23,26 @@ order_prompt_template = PromptTemplate(
     - The keys match the document's terminology.
     - The output remains in valid JSON format.
     - If an expected field is missing, omit it instead of inserting null values.
+    - Map fields dynamically as follows:
+    - "Fabric Code" → "Product Code" in product details.
+    - "CC" → "Color Code" in product details.
+    - "Department" → "Style Description" in product details.
+    - "Ship Via" → "Mode of Transport" in order details.
 
     Example JSON output:
     {{
-        "Order Number": "value_if_available",
-        "Contract Number": "value_if_available",
-        "Supplier Name": "value_if_available",
-        "Buyer": "value_if_available",
-        "Payment Terms": "value_if_available",
-        "Country of Origin": "value_if_available",
-        "Order Total": "value_if_available",
+        "Ship Via": "value_if_available",
         "Items": [
             {{
-                "Item ID": "value_if_available",
-                "Description": "value_if_available",
-                "Quantity": "value_if_available",
-                "Unit Price": "value_if_available"
+                "Product Code": "value_if_available",
+                "Style Description": "value_if_available",
+                "Color Code": "value_if_available"
             }}
         ]
     }}
-    
-    Include any additional fields present in the document and ensure the output is always valid JSON.
+
+    Don't Include any additional fields present in the document. Only return the fileds mentioned in the above example output. And ensure the output is always valid JSON.
+
     """
 )
 
