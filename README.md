@@ -57,7 +57,7 @@ python main.py
 
 ## Project Structure
 
-```
+```sh
 doc_recon_langchain_sandbox/
 ├── data/                               # Sample documents
 │   ├── <sample pdfs>
@@ -105,9 +105,9 @@ doc_recon_langchain_sandbox/
      - `lambda_aws_textract.py`: Extracts text using AWS Textract.  
      - `lambda_langchain_structure.py`: Uses LangChain to structure the extracted text.
 
-3. **Add required dependencies using Lambda layers**  
-   - AWS Lambda does not come pre-installed with Python libraries. You need to package dependencies separately.  
-   - Follow these steps to create a Lambda layer:
+3. **Create and Add a Lambda Layer**  
+   AWS Lambda does not come pre-installed with Python libraries. You need to package dependencies separately.  
+   Follow these steps to create a Lambda layer:
 
    ```sh
    docker pull <AWS_ECR_PYTHON_IMAGE>  # Pull the appropriate Python build from AWS ECR Public
@@ -116,8 +116,11 @@ doc_recon_langchain_sandbox/
    zip -r lambda_layer.zip python
    ```
 
-   - Upload the `lambda_layer.zip` file as a new AWS Lambda layer.
-   - Attach this layer to both Lambda functions.
+   - Go to the AWS Lambda console, navigate to **Layers**, and click **Create layer**.
+   - Upload the `lambda_layer.zip` file.
+   - Select the compatible runtime (Python 3.xx).
+   - Click **Create**.
+   - Attach this layer to Lambda functions.
 
 4. **Configure API Gateway**  
    - Create an API Gateway to expose your Lambda functions as HTTP endpoints.
@@ -142,3 +145,4 @@ Feel free to fork and contribute! Open a pull request with your improvements.
 ## License
 
 This project is licensed under the MIT License.
+
