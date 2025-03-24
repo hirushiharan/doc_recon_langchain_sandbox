@@ -1,4 +1,4 @@
-from functions import extraction, structure_extract_data, extract_aws
+from functions import extract_aws
 
 # Define file paths and bucket details
 BUCKET_NAME = "extract-document-lcm"

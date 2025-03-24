@@ -1,4 +1,0 @@
-docker pull public.ecr.aws/sam/build-python3.11:1.135.0-20250310201004
-docker run -it -v D:\langchain:/var/task public.ecr.aws/sam/build-python3.11:1.135.0-20250310201004
-pip install langchain langchain-community openai -t ./python
-zip -r lambda_layer.zip python
