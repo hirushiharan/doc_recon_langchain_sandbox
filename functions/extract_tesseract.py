@@ -2,7 +2,8 @@ import pdfplumber
 import pytesseract
 from PIL import Image
 import io
-import fitz  # PyMuPDF
+import fitz
+from functions import structure_extract_data
 
 def extract_text_from_pdf(pdf_path: str) -> str:
     """
@@ -64,3 +65,19 @@ def process_document(pdf_path: str) -> str:
         text = extract_text_from_scanned_pdf(pdf_path)
     
     return text
+
+def process_extracted_data(extracted_text: list, output_file: str):
+    """
+    Processes extracted text using LangChain and saves structured data.
+    
+    Args:
+        extracted_text (list): List of extracted text lines.
+        output_file (str): Path to the structured data output file.
+    """
+    if extracted_text:
+        structured_data = structure_extract_data.extract_order_sample_data(" ".join(extracted_text))
+        with open(output_file, "w") as f:
+            f.write(structured_data)
+        print(f"Structured Data: {structured_data}")
+    else:
+        print("No data")
